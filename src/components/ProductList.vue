@@ -16,6 +16,9 @@
     computed: {
       products() {
         return store.state.products
+      },
+      availableProducts() {
+        return store.getters.availableProducts
       }
     },
     created() {
