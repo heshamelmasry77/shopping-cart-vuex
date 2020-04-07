@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 Vue.use(Vuex);
 // Creating vuex store
-new Vuex.Store({ // State, Mutations, Getters, Actions and Modules
+export default new Vuex.Store({ // State, Mutations, Getters, Actions and Modules
   state: { // = data
     products: []
   },
@@ -15,11 +15,13 @@ new Vuex.Store({ // State, Mutations, Getters, Actions and Modules
   actions: { // = methods
     fetchProducts() {
       // make the api call
+      // run setProducts mutation
     }
   },
   mutations: { // = are responsible for setting and updating the state
-    setProducts() {
+    setProducts(state, products) { // products is the payload
       // update products
+      state.products = products
     }
   }
 })

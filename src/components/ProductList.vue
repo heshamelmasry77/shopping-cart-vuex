@@ -9,17 +9,20 @@
 
 <script>
   import shop from '../api/shop'
+  import store from '../store/index'
 
   export default {
     name: 'ProductList',
-    data() {
-      return {
-        products: []
+    computed: {
+      products() {
+        return store.state.products
       }
     },
     created() {
-      shop.getProducts(products => {
-        this.products = products
+      shop.getProducts(products => { // updating the state using mutation
+        // this.products = products
+        // commit a mutation then we pass the name of the mutation
+        store.commit('setProducts', products)
       })
     }
   }
