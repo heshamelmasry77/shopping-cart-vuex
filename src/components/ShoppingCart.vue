@@ -30,7 +30,7 @@
 
       }),
       ...mapState({
-        checkoutStatus: 'checkoutStatus'
+        checkoutStatus: state => state.cart.checkoutStatus
       }),
       // products() {
       //   return this.$store.getters.cartProducts
