@@ -1,6 +1,5 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-import actions from "./actions";
 import cart from './modules/cart'
 import products from "./modules/products";
 
