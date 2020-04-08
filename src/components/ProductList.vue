@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import store from '../store/index'
 
   export default {
     name: 'ProductList',
@@ -24,16 +23,16 @@
     },
     computed: {
       products() {
-        return store.state.products
+        return this.store.state.products
       },
       availableProducts() {
-        return store.getters.availableProducts
+        return this.store.getters.availableProducts
       }
     },
     created() {
       this.loading = true
       // To call an action we use store.dispatch
-      store.dispatch('fetchProducts')
+      this.store.dispatch('fetchProducts')
         .then(() => this.loading = false) //switch back the loading to false when the promise resolved
     }
   }
