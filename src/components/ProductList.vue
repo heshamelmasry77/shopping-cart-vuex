@@ -1,18 +1,27 @@
 <template>
   <div>
     <h1>Product List</h1>
-    <ul>
+    <img
+      v-if="loading"
+      alt=""
+      src="https://i.imgur.com/JfPpwOA.gif"
+    >
+    <ul v-else>
       <li v-for="product in products"> {{product.title}} - {{product.price}}</li>
     </ul>
   </div>
 </template>
 
 <script>
-  import shop from '../api/shop'
   import store from '../store/index'
 
   export default {
     name: 'ProductList',
+    data() {
+      return {
+        loading: false
+      }
+    },
     computed: {
       products() {
         return store.state.products
@@ -22,11 +31,10 @@
       }
     },
     created() {
-      shop.getProducts(products => { // updating the state using mutation
-        // this.products = products
-        // commit a mutation then we pass the name of the mutation
-        store.commit('setProducts', products)
-      })
+      this.loading = true
+      // To call an action we use store.dispatch
+      store.dispatch('fetchProducts')
+        .then(() => this.loading = false) //switch back the loading to false when the promise resolved
     }
   }
 </script>
