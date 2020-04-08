@@ -39,6 +39,11 @@ export default new Vuex.Store({ // State, Mutations, Getters, Actions and Module
         console.log(product.quantity)
         return total + (product.price * product.quantity)
       }, 0)
+    },
+    productIsInStock() {
+      return (product) => {
+        return product.inventory > 0
+      }
     }
   },
   actions: { // = methods
