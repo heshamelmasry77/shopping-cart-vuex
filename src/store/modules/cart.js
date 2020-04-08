@@ -3,12 +3,13 @@
 import shop from "../../api/shop";
 
 export default {
-  state: {
+  namespaced: true,
+  state: {  // = data
     // {id, quantity} // just id and the number of items the user wants to buy
     cart: [],
     checkoutStatus: null
   },
-  getters: {
+  getters: {  // = computed properties
     cartProducts(state, getters, rootState) {
       return state.cart.map(cartItem => {
         const product = rootState.products.products.find(product => product.id === cartItem.id)
@@ -53,7 +54,7 @@ export default {
         context.commit('decrementProductInventory', product) // reduce product inventory by 1
       }
     },
-    checkout({state, commit }) { // we used the state only because it depends on the local state of the module
+    checkout({state, commit}) { // we used the state only because it depends on the local state of the module
       shop.buyProducts(
         state.cart,
         () => { // success call

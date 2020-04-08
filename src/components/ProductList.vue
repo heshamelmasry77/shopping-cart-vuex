@@ -36,7 +36,7 @@
         products: state => state.products.products,
         firstProduct: state => state.products.products[1],
       }),
-      ...mapGetters({
+      ...mapGetters('products',{
         productIsInStock: 'productIsInStock'
       }),
       // products() {
@@ -61,8 +61,8 @@
     },
     methods: {
       ...mapActions({
-        fetchProducts: 'fetchProducts',
-        addProductToCart:'addProductToCart'
+        fetchProducts: 'products/fetchProducts',
+        addProductToCart:'cart/addProductToCart'
       }),
 
       // addProductToCart(product) {

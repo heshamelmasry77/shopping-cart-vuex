@@ -3,11 +3,13 @@
 import shop from "../../api/shop";
 
 export default {
-  state:{
+  namespaced: true,
+
+  state: {  // = data
     products: [],
 
   },
-  getters:{
+  getters: {  // = computed properties
     availableProducts(state, getters) {
       // ... return for the products array
       return state.products.filter(product => product.inventory > 0)
@@ -19,7 +21,7 @@ export default {
       }
     }
   },
-  actions:{
+  actions: { // api calls etc // = methods
     fetchProducts(context) { // context object exposes the same set of methods and properties as a store object
       // context.commit  // context.state =>> to access the state
 
@@ -45,7 +47,7 @@ export default {
       })
     },
   },
-  mutations:{
+  mutations: {
     setProducts(state, products) { // products is the payload
       // update products
       state.products = products
