@@ -24,7 +24,7 @@
       return {}
     },
     computed: {
-      ...mapGetters({
+      ...mapGetters('cart',{
         products: 'cartProducts',
         total: 'cartTotal'
 
@@ -41,7 +41,7 @@
     },
     methods: {
       ...mapActions({
-        checkout: 'checkout'
+        checkout: 'cart/checkout'
       })
     }
   }
