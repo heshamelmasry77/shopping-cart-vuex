@@ -8,7 +8,8 @@ export default new Vuex.Store({ // State, Mutations, Getters, Actions and Module
   state: { // = data
     products: [],
     // {id, quantity} // just id and the number of items the user wants to buy
-    cart: []
+    cart: [],
+    checkoutStatus: null
   },
   getters: { // = computed properties
     availableProducts(state, getters) {
@@ -83,9 +84,21 @@ export default new Vuex.Store({ // State, Mutations, Getters, Actions and Module
         }
         context.commit('decrementProductInventory', product) // reduce product inventory by 1
       }
+    },
+    checkout({state, commit}) {
+      shop.buyProducts(
+        state.cart,
+        () => { // success call
+          commit('emptyCart') // make the cart empty
+          commit('setCheckoutStatus', 'success') // show a success message
+        },
+        () => {
+          commit('setCheckoutStatus', 'fail') // show a fail message
+        }
+      )
     }
   },
-  mutations: { // = are responsible for setting and updating the state
+  mutations: { // = are responsible for setting and updating the state ONLY
     setProducts(state, products) { // products is the payload
       // update products
       state.products = products
@@ -102,6 +115,12 @@ export default new Vuex.Store({ // State, Mutations, Getters, Actions and Module
     },
     decrementProductInventory(state, product) {
       product.inventory--
+    },
+    setCheckoutStatus(state, status) {
+      state.checkoutStatus = status
+    },
+    emptyCart(state) {
+      state.cart = []
     }
   }
 })
