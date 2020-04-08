@@ -18,6 +18,7 @@
 </template>
 
 <script>
+  import {mapState, mapGetters, mapActions} from 'vuex'
 
   export default {
     name: 'ProductList',
@@ -26,30 +27,47 @@
         loading: false
       }
     },
+    // computed: mapState({
+    //   products : state => state.products,
+    //   firstProduct : state => state.products[1],
+    // }),
     computed: {
-      products() {
-        // console.log(this.$store.getters.availableProducts)
-        // return this.$store.getters.availableProducts
-        return this.$store.state.products
-
-      },
+      ...mapState({ //spread operator to use the other computed properties
+        products: state => state.products,
+        firstProduct: state => state.products[1],
+      }),
+      ...mapGetters({
+        productIsInStock: 'productIsInStock'
+      }),
+      // products() {
+      //   // console.log(this.$store.getters.availableProducts)
+      //   // return this.$store.getters.availableProducts
+      //   return this.$store.state.products
+      //
+      // },
       // availableProducts() {
       //   return this.$store.getters.availableProducts
       // }
-      productIsInStock() {
-        return this.$store.getters.productIsInStock
-      }
+      // productIsInStock() { // We used the mapGetters instead of this
+      //   return this.$store.getters.productIsInStock
+      // }
     },
     created() {
       this.loading = true
       // To call an action we use store.dispatch
-      this.$store.dispatch('fetchProducts')
+      // this.$store.dispatch('fetchProducts')
+      this.fetchProducts() // we used it like that because we used the mapActions both works
         .then(() => this.loading = false) //switch back the loading to false when the promise resolved
     },
     methods: {
-      addProductToCart(product) {
-        this.$store.dispatch('addProductToCart', product)
-      }
+      ...mapActions({
+        fetchProducts: 'fetchProducts',
+        addProductToCart:'addProductToCart'
+      }),
+
+      // addProductToCart(product) {
+      //   this.$store.dispatch('addProductToCart', product) // we used it in the mapActions too
+      // }
     }
   }
 </script>
