@@ -7,7 +7,7 @@
       src="https://i.imgur.com/JfPpwOA.gif"
     >
     <ul v-else>
-      <li v-for="product in products"> {{product.title}} - {{product.price}}
+      <li v-for="product in products"> {{product.title}} - {{product.price}} - {{product.inventory}}
         <button @click="addProductToCart(product)">Add To Cart</button>
       </li>
     </ul>
@@ -25,11 +25,11 @@
     },
     computed: {
       products() {
-        return this.$store.state.products
+        return this.$store.state.availableProducts
       },
-      availableProducts() {
-        return this.$store.getters.availableProducts
-      }
+      // availableProducts() {
+      //   return this.$store.getters.availableProducts
+      // }
     },
     created() {
       this.loading = true

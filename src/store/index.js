@@ -73,7 +73,7 @@ export default new Vuex.Store({ // State, Mutations, Getters, Actions and Module
       })
     },
     incrementItemQuantity(state, cartItem) {
-      cartItem.quality++
+      cartItem.quantity++
     },
     decrementProductInventory(state, product) {
       product.inventory--
