@@ -6,7 +6,9 @@ Vue.use(Vuex);
 // Creating vuex store
 export default new Vuex.Store({ // State, Mutations, Getters, Actions and Modules
   state: { // = data
-    products: []
+    products: [],
+    // {id, quantity} // just id and the number of items the user wants to buy
+    cart: []
   },
   getters: { // = computed properties
     availableProducts(state, getters) {
@@ -38,12 +40,24 @@ export default new Vuex.Store({ // State, Mutations, Getters, Actions and Module
           resolve()
         })
       })
-
     },
 
-    addToCart(context, product) { // when the user adds a product to the cart
-      if (product.inventory > 0) { // check if it is in the stock
-        context.commit('pushProductToCart', product)
+    addProductToCart(context, product) { // when the user adds a product to the cart
+      if (product.inventory > 0) { // check if the product is in the stock
+
+        // find the item whose id is equal to the given product id
+        // check in the cart if no product with this product id in the cart
+        const cartItem = context.state.cart.find(item => item.id === product.id);
+        // find cartItem
+        if (!cartItem) {// if no product with this id in the cart
+          // push productToCart // then add this product to the cart
+          context.commit('pushProductToCart', product.id) // we commit mutation
+
+        } else { // the cartItem exist we will increment the item quantity (product exist in the cart)
+          // incrementItemQuantity  // cartItem :{id, quantity}
+          context.commit('incrementItemQuantity', cartItem) // we commit mutation
+        }
+        context.commit('decrementProductInventory', product) // reduce product inventory by 1
       }
     }
   },
@@ -51,6 +65,18 @@ export default new Vuex.Store({ // State, Mutations, Getters, Actions and Module
     setProducts(state, products) { // products is the payload
       // update products
       state.products = products
+    },
+    pushProductToCart(state, productId) {
+      state.cart.push({
+        id: productId,
+        quantity: 1
+      })
+    },
+    incrementItemQuantity(state, cartItem) {
+      cartItem.quality++
+    },
+    decrementProductInventory(state, product) {
+      product.inventory--
     }
   }
 })
