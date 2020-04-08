@@ -33,8 +33,8 @@
     // }),
     computed: {
       ...mapState({ //spread operator to use the other computed properties
-        products: state => state.products,
-        firstProduct: state => state.products[1],
+        products: state => state.products.products,
+        firstProduct: state => state.products.products[1],
       }),
       ...mapGetters({
         productIsInStock: 'productIsInStock'
