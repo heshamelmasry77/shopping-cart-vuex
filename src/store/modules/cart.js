@@ -51,7 +51,7 @@ export default {
           // incrementItemQuantity  // cartItem :{id, quantity}
           context.commit('incrementItemQuantity', cartItem) // we commit mutation
         }
-        context.commit('decrementProductInventory', product) // reduce product inventory by 1
+        context.commit('products/decrementProductInventory', product, {root: true}) // reduce product inventory by 1
       }
     },
     checkout({state, commit}) { // we used the state only because it depends on the local state of the module
